@@ -19,7 +19,7 @@ excluir_tarefa() {
     return
   fi
 
-#verifica se o número digitado é negativo
+#verifica se o número digitado é negativo ou se é maior do que a quantidade de tarefas existentes
   if [ "$id" -le 0 ] || [ "$id" -gt "$(wc -l < tarefas.txt)" ]; then
     echo "Número fora do intervalo. Por favor, digite um número válido."
     return
