@@ -9,26 +9,20 @@ excluir_tarefa() {
   listar_tarefas
   read -rp "Digite o ID da tarefa que deseja excluir: " id
 
-  # verifica se é número
+  # valida se é número
   if ! [[ "$id" =~ ^[0-9]+$ ]]; then
     echo "Por favor, digite apenas números."
     return
   fi
 
-  # verifica se a tarefa existe (ID no começo da linha)
-  if ! grep -Eq "^\[[ X]\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
+  # verifica se a tarefa existe (ID no começo)
+  if ! grep -q "^\[[ X]\][[:space:]]*$id[[:space:]]*|" "$TASK_FILE"; then
     echo "Erro: tarefa não encontrada."
     return
   fi
 
   # exclui SOMENTE a tarefa com esse ID
-  sed -Ei "/^\[[ X]\][[:space:]]*$id[[:space:]]*\|/d" "$TASK_FILE"
+  sed -i "/^\[[ X]\][[:space:]]*$id[[:space:]]*|/d" "$TASK_FILE"
 
-  if [[ -n "$(command -v dialog)" ]]; then
-    clear
-    dialog --msgbox "Tarefa excluída com sucesso." 6 50
-    clear
-  else
-    echo "Tarefa excluída com sucesso."
-  fi
+  echo "Tarefa excluída com sucesso."
 }
