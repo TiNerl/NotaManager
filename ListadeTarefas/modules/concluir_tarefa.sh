@@ -20,12 +20,6 @@ concluir_tarefa() {
         return
     fi
 
-    # verifica se JÁ está concluída (SOMENTE [X])
-    if grep -q "^\[X\][[:space:]]+$id[[:space:]]*\|" "$TASK_FILE"; then
-        echo "Essa tarefa já está concluída."
-        return
-    fi
-
     # marca como concluída (somente se estiver aberta)
     sed -i "s/^\[ \][[:space:]]\+$id[[:space:]]*\|/[X] $id |/" "$TASK_FILE"
 
