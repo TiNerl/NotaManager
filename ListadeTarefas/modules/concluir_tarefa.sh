@@ -21,7 +21,8 @@ concluir_tarefa() {
     fi
     
     # apenas troca [ ] por [X] NA LINHA DO ID
-    sed -i "${id}s/^\[ \]/[X]/" data/tarefas.txt
+    sed -i "/^\[ \][[:space:]]\+$id[[:space:]]*\|/ s/^\[ \]/[X]/" "$TASK_FILE"
+
     echo "Tarefa marcada como concluída!"
 
 }
