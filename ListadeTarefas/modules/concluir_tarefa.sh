@@ -32,18 +32,19 @@ concluir_tarefa() {
             split($1, a, " ")
             if (a[1]=="[X]" && a[2]==id) found=1
         }
-        END { exit !found }
+        END { exit found }
     ' "$TASK_FILE"; then
         echo "Essa tarefa já está concluída."
         return
     fi
 
-    # marca como concluída (SOMENTE ESSA LINHA)
+    # marca como concluída (somente essa tarefa)
     awk -F'|' -v id="$id" '
         {
             split($1, a, " ")
             if (a[2] == id && a[1] == "[ ]") {
-                $1 = "[X] " id
+                a[1] = "[X]"
+                $1 = a[1] " " a[2]
             }
             print $1 " | " $2 " | " $3
         }
