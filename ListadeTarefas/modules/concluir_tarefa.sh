@@ -16,19 +16,19 @@ concluir_tarefa() {
     fi
 
     # verifica se a tarefa existe
-    if ! grep -q "\|[[:space:]]*$id[[:space:]]*$" "$TASK_FILE"; then
+    if ! grep -q "^\[[ X]\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
         echo "Erro: tarefa não encontrada."
         return
     fi
-
+    
     # verifica se já está concluída
-    if grep -q "^\[X\].*\|[[:space:]]*$id[[:space:]]*$" "$TASK_FILE"; then
+    if grep -q "^\[X\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
         echo "Essa tarefa já está concluída."
         return
     fi
-
-    # marca SOMENTE a tarefa correta como concluída
-    sed -i "/^\[ \].*\|[[:space:]]*$id[[:space:]]*$/ s/^\[ \]/[X]/" "$TASK_FILE"
+    
+    # marca como concluída (linha exata)
+    sed -i "/^\[ \][[:space:]]*$id[[:space:]]*\|/ s/^\[ \]/[X]/" "$TASK_FILE"
 
     echo "Tarefa marcada como concluída!"
 }
