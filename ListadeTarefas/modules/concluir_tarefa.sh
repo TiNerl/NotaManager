@@ -14,20 +14,20 @@ concluir_tarefa() {
         return
     fi
 
-    # verifica se o ID existe (independente do estado)
-    if ! grep -q "^\[[ X]\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
+    # verifica se o ID existe (qualquer estado)
+    if ! grep -q "^\[[ X]\][[:space:]]+$id[[:space:]]*\|" "$TASK_FILE"; then
         echo "Erro: tarefa não encontrada."
         return
     fi
 
-    # verifica se JÁ está concluída (somente [X])
-    if grep -q "^\[X\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
+    # verifica se JÁ está concluída (SOMENTE [X])
+    if grep -q "^\[X\][[:space:]]+$id[[:space:]]*\|" "$TASK_FILE"; then
         echo "Essa tarefa já está concluída."
         return
     fi
 
-    # marca como concluída (somente se estiver [ ])
-    sed -i "s/^\[ \][[:space:]]*$id[[:space:]]*\|/[X] $id |/" "$TASK_FILE"
+    # marca como concluída (somente se estiver aberta)
+    sed -i "s/^\[ \][[:space:]]\+$id[[:space:]]*\|/[X] $id |/" "$TASK_FILE"
 
     if [[ -n "$(command -v dialog)" ]]; then
         clear
