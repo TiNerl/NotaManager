@@ -49,7 +49,8 @@ echo "|====================----------------------------------===================
         read -rp "Pressione Enter para continuar...";;
         5) excluir_tarefa 
         read -rp "Pressione Enter para continuar...";;
-        0) echo "Saindo..."; break ;;
+        0) echo "Saindo..."; break 
+        read -rp "Pressione Enter para continuar...";;
         *) echo "Opção inválida!" ;;
     esac
 done
