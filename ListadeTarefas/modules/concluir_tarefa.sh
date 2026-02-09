@@ -19,9 +19,9 @@ concluir_tarefa() {
         echo "Erro: tarefa não encontrada."
         return
     fi
-    :
+    
     # apenas troca [ ] por [X] NA LINHA DO ID
-    sed -i "/^\[ \][[:space:]]\+$id[[:space:]]*\|/ s/^\[ \]/[X]/" "$TASK_FILE"
-
+    sed -i "${id}s/^\[ \]/[X]/" data/tarefas.txt
     echo "Tarefa marcada como concluída!"
+
 }
