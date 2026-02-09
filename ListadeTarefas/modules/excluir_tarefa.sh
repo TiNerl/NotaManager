@@ -6,10 +6,10 @@ excluir_tarefa() {
     return
   fi
 
+  #Lista as tarefas e solicita o número da que deve ser excluída
   echo "Tarefas atuais:"
   nl -w2 -s'. ' "$TASK_FILE"
   echo
-
   read -rp "Digite o número da tarefa que deseja excluir: " id
 
   # verifica se é número
@@ -30,3 +30,4 @@ excluir_tarefa() {
   sed -i "${id}d" "$TASK_FILE"
   echo "Tarefa excluída com sucesso."
 }
+
