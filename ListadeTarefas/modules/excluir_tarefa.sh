@@ -16,13 +16,13 @@ excluir_tarefa() {
   fi
 
   # verifica se a tarefa existe (ID no começo da linha)
-  if ! grep -q "^\[[ X]\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
+  if ! grep -Eq "^\[[ X]\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
     echo "Erro: tarefa não encontrada."
     return
   fi
 
   # exclui SOMENTE a tarefa com esse ID
-  sed -i "/^\[[ X]\][[:space:]]*$id[[:space:]]*\|/d" "$TASK_FILE"
+  sed -Ei "/^\[[ X]\][[:space:]]*$id[[:space:]]*\|/d" "$TASK_FILE"
 
   if [[ -n "$(command -v dialog)" ]]; then
     clear
