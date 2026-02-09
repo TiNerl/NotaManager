@@ -1,4 +1,5 @@
-adicionar_tarefa() {
+adicionar_tarefa()
+{
     read -rp "Descrição da tarefa: " desc
     read -rp "Data de entrega (DD/MM/AAAA): " data
     read -rp "Número da tarefa:" id
@@ -9,5 +10,6 @@ adicionar_tarefa() {
     fi
 
     echo "[ ] | $desc | $data | $id" >> "$TASK_FILE"
-    echo "Tarefa adicionada com sucesso!"
+    dialog --msgbox "Tarefa adicionada com sucesso!" 6 50
 }
+
