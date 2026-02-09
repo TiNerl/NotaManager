@@ -6,26 +6,27 @@ concluir_tarefa() {
     fi
 
     listar_tarefas
-    read -rp "Digite o número da tarefa concluída: " id
+    read -rp "Digite o ID da tarefa concluída: " id
 
+    # valida número
     if ! [[ "$id" =~ ^[0-9]+$ ]]; then
         echo "Erro: digite um número válido."
         return
     fi
 
-    # verifica se a tarefa existe
+    # verifica se o ID existe (independente do estado)
     if ! grep -q "^\[[ X]\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
         echo "Erro: tarefa não encontrada."
         return
     fi
 
-    # verifica se já está concluída
+    # verifica se JÁ está concluída (somente [X])
     if grep -q "^\[X\][[:space:]]*$id[[:space:]]*\|" "$TASK_FILE"; then
         echo "Essa tarefa já está concluída."
         return
     fi
 
-    # MARCA COMO CONCLUÍDA (regex corrigido)
+    # marca como concluída (somente se estiver [ ])
     sed -i "s/^\[ \][[:space:]]*$id[[:space:]]*\|/[X] $id |/" "$TASK_FILE"
 
     if [[ -n "$(command -v dialog)" ]]; then
