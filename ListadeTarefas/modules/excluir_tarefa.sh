@@ -7,9 +7,7 @@ excluir_tarefa() {
   fi
 
   #Lista as tarefas e solicita o número da que deve ser excluída
-  echo "Tarefas atuais:"
-  nl -w2 -s'. ' "$TASK_FILE"
-  echo
+  listar_tarefas
   read -rp "Digite o número da tarefa que deseja excluir: " id
 
   # verifica se é número
@@ -28,6 +26,12 @@ excluir_tarefa() {
 
   # exclui a tarefa
   sed -i "${id}d" "$TASK_FILE"
-  echo "Tarefa excluída com sucesso."
+  if [[ -n "$(command -v dialog)" ]]; then
+        clear
+        dialog --msgbox "Tarefa excluída com sucesso." 6 50
+        clear
+    else
+        echo "Tarefa excluída com sucesso."
+    fi
 }
 
