@@ -18,7 +18,7 @@ adicionar_tarefa()
     fi
     
     # Verificar se a descrição é um texto válido e não permite números
-    if [ -z "$descricao" ] || [[ "$descricao" =~ ^[0-9]+$ ]]; then
+    if [ -z "$desc" ] || [[ "$desc" =~ ^[0-9]+$ ]]; then
       echo "Descrição inválida."
       return
     fi
