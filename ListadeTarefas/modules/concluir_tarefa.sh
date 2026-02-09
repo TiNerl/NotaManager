@@ -6,7 +6,6 @@ concluir_tarefa() {
         return
     fi
 
-    #Solicita ao usuário o número da tarefa que deverá ser marcada como concluída
     listar_tarefas
     read -rp "Digite o número da tarefa concluída: " id
 
@@ -16,14 +15,20 @@ concluir_tarefa() {
         return
     fi
 
-    # verifica se a tarefa existe
-    if ! grep -q "| $id$" "$TASK_FILE"; then
+    # verifica se a tarefa existe (padrão flexível)
+    if ! grep -q "\|[[:space:]]*$id[[:space:]]*$" "$TASK_FILE"; then
         echo "Erro: tarefa não encontrada."
         return
     fi
 
+    # verifica se a tarefa já está concluída 
+    if grep -q "^\[X\].*\|[[:space:]]*$id[[:space:]]*$" "$TASK_FILE"; then
+        echo "Essa tarefa já está concluída."
+        return
+    fi
+
     # marca como concluída
-    sed -i "/| $id$/ s/^\[ \]/[X]/" "$TASK_FILE"
+    sed -i "/\|[[:space:]]*$id[[:space:]]*$/ s/^\[ \]/[X]/" "$TASK_FILE"
 
     if [[ -n "$(command -v dialog)" ]]; then
         clear
@@ -31,11 +36,5 @@ concluir_tarefa() {
         clear
     else
         echo "Tarefa marcada como concluída!"
-    fi
-
-    #Avisa se a tarefa já estiver concluída
-    if grep -q "^\[X\].*| $id$" "$TASK_FILE"; then
-    echo "Essa tarefa já está concluída."
-    return
     fi
 }
