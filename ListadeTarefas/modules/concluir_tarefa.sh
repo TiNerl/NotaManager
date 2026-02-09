@@ -15,14 +15,39 @@ concluir_tarefa() {
     fi
 
     # verifica se o ID existe
-    if ! grep -q "^\[[ X]\][[:space:]]\+$id[[:space:]]*\|" "$TASK_FILE"; then
+    if ! awk -F'|' -v id="$id" '
+        {
+            split($1, a, " ")
+            if (a[2] == id) found=1
+        }
+        END { exit !found }
+    ' "$TASK_FILE"; then
         echo "Erro: tarefa não encontrada."
         return
     fi
-    
-    # apenas troca [ ] por [X] NA LINHA DO ID
-    sed -i "/^\[ \][[:space:]]\+$id[[:space:]]*\|/ s/^\[ \]/[X]/" "$TASK_FILE"
+
+    # verifica se já está concluída
+    if awk -F'|' -v id="$id" '
+        {
+            split($1, a, " ")
+            if (a[1]=="[X]" && a[2]==id) found=1
+        }
+        END { exit !found }
+    ' "$TASK_FILE"; then
+        echo "Essa tarefa já está concluída."
+        return
+    fi
+
+    # marca como concluída (SOMENTE ESSA LINHA)
+    awk -F'|' -v id="$id" '
+        {
+            split($1, a, " ")
+            if (a[2] == id && a[1] == "[ ]") {
+                $1 = "[X] " id
+            }
+            print $1 " | " $2 " | " $3
+        }
+    ' "$TASK_FILE" > "$TASK_FILE.tmp" && mv "$TASK_FILE.tmp" "$TASK_FILE"
 
     echo "Tarefa marcada como concluída!"
-
 }
