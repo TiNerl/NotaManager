@@ -30,6 +30,12 @@ concluir_tarefa() {
     # marca como concluída (linha exata)
     sed -i "/^\[ \][[:space:]]*$id[[:space:]]*\|/ s/^\[ \]/[X]/" "$TASK_FILE"
 
-    echo "Tarefa marcada como concluída!"
+    if [[ -n "$(command -v dialog)" ]]; then
+        clear
+        dialog --msgbox echo "Tarefa marcada como concluída!" 6 50
+        clear
+    else
+        echo "Tarefa marcada como concluída!"
+    fi
 }
 
