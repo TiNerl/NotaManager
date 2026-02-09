@@ -15,25 +15,29 @@ concluir_tarefa() {
     fi
 
     # verifica se o ID existe
-    if ! awk -F'|' -v id="$id" '
+    awk -F'|' -v id="$id" '
         {
             split($1, a, " ")
-            if (a[2] == id) found=1
+            if (a[2] == id) exit 0
         }
-        END { exit !found }
-    ' "$TASK_FILE"; then
+        END { exit 1 }
+    ' "$TASK_FILE"
+
+    if [ $? -ne 0 ]; then
         echo "Erro: tarefa não encontrada."
         return
     fi
 
     # verifica se já está concluída
-    if awk -F'|' -v id="$id" '
+    awk -F'|' -v id="$id" '
         {
             split($1, a, " ")
-            if (a[1]=="[X]" && a[2]==id) found=1
+            if (a[1] == "[X]" && a[2] == id) exit 0
         }
-        END { exit found }
-    ' "$TASK_FILE"; then
+        END { exit 1 }
+    ' "$TASK_FILE"
+
+    if [ $? -eq 0 ]; then
         echo "Essa tarefa já está concluída."
         return
     fi
@@ -43,8 +47,7 @@ concluir_tarefa() {
         {
             split($1, a, " ")
             if (a[2] == id && a[1] == "[ ]") {
-                a[1] = "[X]"
-                $1 = a[1] " " a[2]
+                $1 = "[X] " id
             }
             print $1 " | " $2 " | " $3
         }
