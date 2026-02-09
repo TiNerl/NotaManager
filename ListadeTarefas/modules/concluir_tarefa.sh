@@ -19,14 +19,7 @@ concluir_tarefa() {
         echo "Erro: tarefa não encontrada."
         return
     fi
-
-    # verifica se já está concluída
-    if grep -q "^\[X\][[:space:]]\+$id[[:space:]]*\|" "$TASK_FILE"; then
-        echo "Essa tarefa já está concluída."
-        return
-    fi
-
-    # AQUI ESTÁ A CORREÇÃO REAL:
+    :
     # apenas troca [ ] por [X] NA LINHA DO ID
     sed -i "/^\[ \][[:space:]]\+$id[[:space:]]*\|/ s/^\[ \]/[X]/" "$TASK_FILE"
 
