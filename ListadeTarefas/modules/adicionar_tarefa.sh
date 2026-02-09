@@ -14,7 +14,9 @@ adicionar_tarefa()
 
     # Verifica se o usuário tem o dialog instalado
     if [[ -n "$(command -v dialog)" ]]; then
+        clear
         dialog --msgbox "Tarefa adicionada com sucesso!" 6 50
+        clear
     else
         echo "Tarefa adicionada com sucesso!"
     fi
