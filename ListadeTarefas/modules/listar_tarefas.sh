@@ -1,5 +1,5 @@
 listar_tarefas() {
-    if [[ ! -s data/tarefas.txt ]]; then
+    if [[ ! -s "$TASK_FILE" ]]; then
         echo "Nenhuma tarefa cadastrada."
         return
     fi
