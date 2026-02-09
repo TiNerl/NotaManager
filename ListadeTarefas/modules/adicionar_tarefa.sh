@@ -9,7 +9,14 @@ adicionar_tarefa()
         return
     fi
 
+    # Formato: STATUS | DESCRICAO | DATA | ID
     echo "[ ] | $desc | $data | $id" >> "$TASK_FILE"
-    dialog --msgbox "Tarefa adicionada com sucesso!" 6 50
+
+    # Verifica se o usuário tem o dialog instalado
+    if [[ -n "$(command -v dialog)" ]]; then
+        dialog --msgbox "Tarefa adicionada com sucesso!" 6 50
+    else
+        echo "Tarefa adicionada com sucesso!"
+    fi
 }
 

@@ -6,8 +6,8 @@ export DIALOGOPTS="--colors"
 DATA_DIR="data"
 TASK_FILE="$DATA_DIR/tarefas.txt"
 
-mkdir -p $DATA_DIR
-touch $TASK_FILE
+mkdir -p "$DATA_DIR"
+touch "$TASK_FILE"
 
 source modules/adicionar_tarefa.sh
 source modules/listar_tarefas.sh
@@ -37,7 +37,7 @@ echo "|====================----------------------------------===================
     echo "0 - Sair"
     read -p "Escolha uma opção: " opcao
 
-    case $opcao in
+    case "$opcao" in
         1) adicionar_tarefa ;;
         2) listar_tarefas ;;
         3) concluir_tarefa ;;
