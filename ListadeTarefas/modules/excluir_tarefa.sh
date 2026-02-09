@@ -24,5 +24,11 @@ excluir_tarefa() {
   # exclui SOMENTE a tarefa com esse ID
   sed -i "/^\[[ X]\][[:space:]]*$id[[:space:]]*|/d" "$TASK_FILE"
 
-  echo "Tarefa excluída com sucesso."
+  if [[ -n "$(command -v dialog)" ]]; then
+    clear
+    dialog --msgbox "Tarefa excluida com sucesso!" 6 50
+    clear
+  else
+    echo "Tarefa excluida com sucesso!"
+  fi
 }

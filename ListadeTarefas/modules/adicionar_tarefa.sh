@@ -33,5 +33,12 @@ adicionar_tarefa() {
     fi
 
     echo "[ ] $id | $desc | $data" >> "$TASK_FILE"
-    echo "Tarefa adicionada com sucesso!"
+
+    if [[ -n "$(command -v dialog)" ]]; then
+        clear
+        dialog --msgbox "Tarefa adicionada com sucesso!" 6 50
+        clear
+    else
+        echo "Tarefa adicionada com sucesso!"
+    fi
 }
