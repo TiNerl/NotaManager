@@ -22,6 +22,13 @@ concluir_tarefa() {
     
     # apenas troca [ ] por [X] NA LINHA DO ID
     sed -i "/^\[ \][[:space:]]*$id[[:space:]]*|/s/^\[ \]/[X]/" "$TASK_FILE"
-    echo "Tarefa marcada como concluída!"
+    
+    if [[ -n "$(command -v dialog)" ]]; then
+        clear
+        dialog --msgbox "Tarefa concluida com sucesso!" 6 50
+        clear
+    else
+        echo "Tarefa concluida com sucesso!"
+    fi
 
 }
