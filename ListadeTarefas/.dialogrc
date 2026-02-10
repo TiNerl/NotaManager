@@ -1,4 +1,4 @@
-
+#Modificações para tornar a caixa de texto do dialog mais coerente com as cores do terminal
 
 # Fundo da tela
 screen_color = (BLACK,BLACK,OFF)
@@ -18,5 +18,3 @@ title_color = (CYAN,BLACK,OFF)
 # Botões
 button_active_color = (BLACK,WHITE,ON)
 button_inactive_color = (WHITE,BLACK,OFF)
-
-
