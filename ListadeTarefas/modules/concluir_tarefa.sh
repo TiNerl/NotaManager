@@ -6,7 +6,7 @@ concluir_tarefa() {
         return
     fi
 
-    #Solicita ID ao usuário para marcar a tarefa concluída
+    #Solicita ID ao usuário para marcar a tarefa concluída e mostra as tarefas já adicionadas
     listar_tarefas
     read -rp "Digite o ID da tarefa concluída: " id
 
